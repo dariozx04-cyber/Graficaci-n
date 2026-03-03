@@ -8,38 +8,47 @@ Esta actividad encontre la solucion en simplemente reutilizar el codigo que ya h
 
 ## Código
 import numpy as np
+
 import cv2
+ 
+width, height = 1000, 1000  
 
-
- Definir los parámetros iniciales
-width, height = 1000, 1000  # Ampliar la ventana para ver toda la figura
 img = np.ones((height, width, 3), dtype=np.uint8)*255
 
 
 #Parámetros de la curva de Limacon
-a, b = 150, 100 
-a2,b2= 100, 95
-a3,b3=100, 95 
-a4,b4=50,50  # Reducir los valores de a y b para que la curva se ajuste mejor
-k = 1.9
-k2=0.65
-k3=1.8
-k4=2.5 # Constante de multiplicación del ángulo
-theta_increment = 0.05  # Incremento del ángulo
-max_theta = 2 * np.pi  # Un ciclo completo
 
-#Centro de la imagen
+a, b = 150, 100 
+
+a2,b2= 100, 95
+
+a3,b3=100, 95 
+
+a4,b4=50,50
+ 
+k = 1.9
+
+k2=0.65
+
+k3=1.8
+
+k4=2.5 
+
+theta_increment = 0.05  
+
+max_theta = 2 * np.pi 
+
+
 center_x, center_y = width // 2, height // 2
 
 theta = 0  # Ángulo inicial
 
 while True:  # Bucle infinito
-    # Limpiar la imagen
-    #img = np.ones((width, height, 3), dtype=np.uint8) * 255
+   
     
     # Dibujar la curva completa desde 0 hasta theta
     for t in np.arange(0, theta, theta_increment):
-        # Calcular las coordenadas paramétricas (x, y) para la curva de Limacon
+        
         r = a + b * np.cos(k * t)
         x = int(center_x + r * np.cos(t))
         y = int(center_y + r * np.sin(t))
@@ -81,7 +90,6 @@ while True:  # Bucle infinito
     if cv2.waitKey(30) & 0xFF == 27:  # Esperar 30ms, salir con 'ESC'
         break
 
- #Cerrar la ventana al finalizar
+ 
 cv2.destroyAllWindows()
-
 
