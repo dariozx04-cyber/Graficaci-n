@@ -1,4 +1,7 @@
 # Actividad Parametrica
+Dario Padilla Moreno
+GrupoB
+
 Esta actividad encontre la solucion en simplemente reutilizar el codigo que ya habian en los apuntes, lo unico que hice fue agregar más funciones parametricas y cambiar coordenadas.
 
 <img src="C:\Users\jaime\OneDrive\Escritorio\tareasGrafi\Parametricadib.png" width="200" height= "200">
@@ -80,4 +83,5 @@ while True:  # Bucle infinito
 
  #Cerrar la ventana al finalizar
 cv2.destroyAllWindows()
+
 
