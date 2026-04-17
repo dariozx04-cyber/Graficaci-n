@@ -5,7 +5,13 @@
 ## Evidencias
 ### Misión 1
 - Imagen recuperada x50: 
+
+<img src="C:\Users\jaime\OneDrive\Escritorio\tareasGrafi\m1_recuperado_x50.png" width="200" height= "200">
+
 - Imagen recuperada x50 + 20: 
+
+<img src="C:\Users\jaime\OneDrive\Escritorio\tareasGrafi\m1_recuperado_x50_mas20.png" width="200" height= "200">
+
 - Código:
 
 import cv2
@@ -73,8 +79,12 @@ cv2.waitKey(0)
 
 cv2.destroyAllWindows()
 ### Misión 2
-- QR reconstruido: (inserta)
+- QR reconstruido:
+
+<img src="C:\Users\jaime\OneDrive\Escritorio\tareasGrafi\QR.png" width="200" height= "200">
+
 - Código:
+
 import cv2
 
 import numpy as np
@@ -107,11 +117,57 @@ cv2.destroyAllWindows()
 cv2.imwrite("m2_qr_reconstruido.png", lienzo)
 
 ### Misión 3
-- Sello forjado: (inserta)
+- Sello forjado: <img src="C:\Users\jaime\OneDrive\Escritorio\tareasGrafi\Mision3.png" width="200" height= "200">
 - Código:
+import cv2
+
+import numpy as np
+
+import math
+
+
+img = np.zeros((600,600,3), np.uint8)
+
+img[:] = (40,20,20)
+
+
+c = (300,300)
+
+cv2.circle(img, c, 170, (0,255,255), 3)
+
+cv2.circle(img, c, 110, (0,255,255), 2)
+
+cv2.rectangle(img, (250,260), (350,340), (0,0,255), -1)
+
+
+cv2.line(img, (0,0), (599,599), (255,255,255), 2)
+
+cv2.line(img, (599,0), (0,599), (255,255,255), 2)
+
+
+for i in range(8):
+
+    ang = i * 45  
+    x = int(300 + 140 * math.cos(math.radians(ang)))
+    y = int(300 + 140 * math.sin(math.radians(ang)))
+    cv2.circle(img, (x,y), 8, (0,255,0), -1)
+
+cv2.putText(img, "SECTOR-9", (200,560), 0, 1, (255,255,255), 2)
+
+
+cv2.imwrite("m3_sello_forjado_v2.png", img)
+
+cv2.imshow("img", img)
+
+cv2.waitKey(0)
+
+cv2.destroyAllWindows()
 
 ### Misión 4
-- Máscara Cyan: (inserta)
+- Máscara Cyan: 
+
+<img src="C:\Users\jaime\OneDrive\Escritorio\tareasGrafi\Ruido.png" width="200" height= "200">
+
 - Código:
 import cv2
 
@@ -136,21 +192,61 @@ cv2.destroyAllWindows()
 
 cv2.imwrite("m4_mask_cyan.png", mask)
 ### Misión 5
-- Evidencia tricolor: (inserta)
-- Mensaje recuperado: (inserta)
+- Evidencia tricolor: 
+<img src="C:\Users\jaime\OneDrive\Escritorio\tareasGrafi\mision5.png" width="200" height= "200">
+- Mensaje recuperado:
 - Código:
+import cv2
+
+import numpy as np
+
+img = np.random.randint(0,256,(300,700,3),dtype=np.uint8)
+
+texto = "Hola"
+
+cv2.putText(img, texto, (50,150), 0, 2, (0,255,0), 3)  
+
+
+cv2.imwrite("m5_tricolor.png", img)
+
+B, G, R = cv2.split(img)
+
+cv2.imshow("Canal B", B)
+
+cv2.imshow("Canal G", G)
+
+cv2.imshow("Canal R", R)
+
+
+diff = cv2.absdiff(G, B)
+
+cv2.imshow("abs(G-B)", diff)
+
+cv2.imwrite("m5_mensaje.png", diff)
+
+cv2.waitKey(0)
+
+cv2.destroyAllWindows()
 
 ---
 ## Análisis del Analista (Reflexiones Finales)
 
 1. **Operadores puntuales (M1):** ¿Qué diferencia visual hay entre recuperar con multiplicación (x50) y recuperar con suma (+50)? ¿Cuál preserva mejor el contraste del texto?
-> [Respuesta]
+> ## Multiplicación (x50)
+Aumenta proporcionalmente todos los valores.
+Las zonas claras se vuelven mucho más claras y las oscuras siguen siendo oscuras.
+## Suma de 50
+Desplaza todos los valores por igual.
+Todo se vuelve más claro, pero las diferencias entre píxeles se mantienen iguales. 
 
 2. **Transformaciones geométricas (M2):** ¿Por qué es importante escoger el centro correcto al rotar una imagen con `getRotationMatrix2D`?
-> [Respuesta]
+
+> Porque el centro de rotación define alrededor de qué punto gira toda la imagen.
 
 3. **Convolución (M4):** ¿Por qué un filtro promedio puede ayudar a reducir falsos positivos antes de segmentar por HSV, y qué desventaja tiene sobre los bordes del texto?
-> [Respuesta]
+>
+Suaviza la imagen eliminando ruido y variaciones pequeñas de color y pierde nitidez en los bordes como desventaja.
 
 4. **Canales (M5):** ¿Por qué separar canales puede revelar información que en la imagen a color “no se ve” a simple vista?
-> [Respuesta]
+> 
+Porque cada canal guarda información distinta de la imagen. Al verlos por separado, puedes notar cosas que en la imagen a color quedan mezcladas
